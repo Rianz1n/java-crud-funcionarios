@@ -49,3 +49,13 @@ CREATE TABLE pessoas (
     sexo CHAR(1),
     email VARCHAR(40)
 );
+
+## Demonstração do sistema
+
+### Sistema rodando
+
+![Sistema](imagens/crud-java.png)
+
+### Estrutura do banco de dados
+
+![Banco](imagens/DBeaver.png)
