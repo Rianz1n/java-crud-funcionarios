@@ -54,12 +54,16 @@ public class FuncionarioRepository {
 
             if (rs.next()) {
 
-                return new Funcionario(
+                Funcionario funcionario = new Funcionario(
                         rs.getString("nome"),
                         rs.getInt("idade"),
                         rs.getString("sexo").charAt(0),
                         rs.getString("email")
                 );
+
+                funcionario.setId(rs.getInt("id")); // IMPORTANTE
+
+                return funcionario;
             }
 
         } catch (Exception e) {
@@ -97,10 +101,10 @@ public class FuncionarioRepository {
     public void atualizar(Funcionario funcionario){
 
         String sql = """
-            UPDATE pessoas
-            SET nome = ?, idade = ?, sexo = ?, email = ?
-            WHERE nome = ?
-            """;
+        UPDATE pessoas
+        SET nome = ?, idade = ?, sexo = ?, email = ?
+        WHERE id = ?
+        """;
 
         try(Connection conn = ConnectionFactory.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
@@ -109,7 +113,7 @@ public class FuncionarioRepository {
             stmt.setInt(2, funcionario.getIdade());
             stmt.setString(3, String.valueOf(funcionario.getSexo()));
             stmt.setString(4, funcionario.getEmail());
-            stmt.setString(5, funcionario.getNome());
+            stmt.setInt(5, funcionario.getId());
 
             stmt.executeUpdate();
 
